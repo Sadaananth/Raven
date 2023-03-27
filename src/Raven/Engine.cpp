@@ -24,8 +24,13 @@ std::unique_ptr<Engine>& Engine::instance()
     return mEngineInstance;
 }
 
-Engine::Engine()
+Engine::Engine() : mRenderer(Renderer::instance())
 {
+}
+
+void Engine::run()
+{
+    mRenderer->start();
 }
 
 }
