@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Renderer.hpp"
+#include "WindowManager.hpp"
+#include "EntityManager.hpp"
 
 #include <memory>
 
@@ -16,9 +17,12 @@ public:
 private:
     Engine();
 
+    bool isContinue() const;
+
     static std::unique_ptr<Engine> mEngineInstance;
 
-    std::unique_ptr<Renderer>& mRenderer;
+    std::unique_ptr<WindowManager>& mWindowManager;
+    std::unique_ptr<EntityManager>& mEntityManager;
 };
 
 }

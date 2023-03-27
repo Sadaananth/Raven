@@ -3,6 +3,7 @@
 #include "src/Logger.hpp"
 
 #include <stdexcept>
+#include <thread>
 
 namespace Raven
 {
@@ -24,13 +25,23 @@ std::unique_ptr<Engine>& Engine::instance()
     return mEngineInstance;
 }
 
-Engine::Engine() : mRenderer(Renderer::instance())
+Engine::Engine()
+    : mWindowManager(WindowManager::instance())
+    , mEntityManager(EntityManager::instance())
 {
+}
+
+bool Engine::isContinue() const
+{
+    return mWindowManager->isAlive();
 }
 
 void Engine::run()
 {
-    mRenderer->start();
+    while(isContinue()) {
+        mWindowManager->execute();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 }
 
 }

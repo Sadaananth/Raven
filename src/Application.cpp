@@ -16,9 +16,7 @@ Application::~Application()
 
 void Application::run()
 {
-    while(true) {
-        Engine::instance()->run();
-    }
+    Engine::instance()->run();
 }
 
 }
