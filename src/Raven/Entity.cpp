@@ -1,39 +1,59 @@
 #include "Entity.hpp"
 
-#include <SFML/Graphics.hpp>
+#include "src/Logger.hpp"
 
 #include <string>
+#include <fstream>
+
+using namespace Sada;
 
 namespace Raven
 {
 
-struct EntityPimpl
+Entity::Entity()
 {
-    EntityPimpl() {}
-    ~EntityPimpl() {}
 
-    uint32_t mId;
-    std::string mName;
-    sf::Vector2f mPosition;
-};
+}
 
-Entity::Entity() : mEntityPimpl(new EntityPimpl())
+Entity::~Entity()
 {
 
 }
 
 void Entity::setId(uint32_t id)
 {
-    if(mEntityPimpl) {
-        mEntityPimpl->mId = id;
-    }
+    mId = id;
 }
 
 uint32_t Entity::getId() const
 {
-    if(mEntityPimpl) {
-        return mEntityPimpl->mId;
+    return mId;
+}
+
+void Entity::setName(const std::string& name)
+{
+    mName = name; 
+}
+
+std::string Entity::getName() const
+{
+    return mName;
+}
+
+void Entity::loadAsset(const std::string& filename)
+{
+    if(!mTexture.loadFromFile(filename)) {
+        throw std::runtime_error("Failed to load asset " + filename);
     }
+
+    mSprite.setTexture(mTexture);
+
+    LOG_DEBUG << "Asset " << filename << " loaded succesfully";
+}
+
+const sf::Sprite& Entity::getSprite() const
+{
+    return mSprite;
 }
 
 }

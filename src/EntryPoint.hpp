@@ -17,6 +17,7 @@ int main()
 
     LOG_DEBUG << "Application is created";
 
+    application->setup();
     application->run();
 
     return 0;

@@ -26,7 +26,7 @@ std::unique_ptr<Engine>& Engine::instance()
 }
 
 Engine::Engine()
-    , mEntityManager(EntityManager::instance())
+    : mEntityManager(EntityManager::instance())
     , mRenderer(Renderer::instance())
 {
 }
@@ -36,12 +36,29 @@ bool Engine::isContinue() const
     return mRenderer->isAlive();
 }
 
+void Engine::setName(const std::string& name)
+{
+    mRenderer->setWindowName(name);
+}
+
 void Engine::run()
 {
     while(isContinue()) {
+        mRenderer->setup();
+        mEntityManager->draw(mRenderer->getWindow());
         mRenderer->execute();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
+}
+
+uint32_t Engine::createNewEntity(const std::string& name)
+{
+    return mEntityManager->registerEntity(name);
+}
+
+void Engine::loadEntityAsset(uint32_t id, const std::string& assetpath)
+{
+    return mEntityManager->loadEntityAsset(id, assetpath);
 }
 
 }

@@ -2,8 +2,6 @@
 
 #include "src/Logger.hpp"
 
-#include <SFML/Graphics.hpp>
-
 #include <stdexcept>
 
 namespace Raven
@@ -11,26 +9,30 @@ namespace Raven
 
 using namespace Sada;
 
-class RendererPimpl
+struct RendererPimpl
 {
-public:
     RendererPimpl();
 
+    void setup();
     void execute();
 
     bool isWindowOpen() const;
-private:
+
     sf::RenderWindow mRenderWindow;
 };
 
-RendererPimpl::RendererPimpl() : mRenderWindow(sf::VideoMode(600, 400), "Render")
+RendererPimpl::RendererPimpl() : mRenderWindow(sf::VideoMode(600, 400), "Raven")
 {
 
 }
 
-void RendererPimpl::execute()
+void RendererPimpl::setup()
 {
     mRenderWindow.clear();
+}
+
+void RendererPimpl::execute()
+{
     mRenderWindow.display();
     sf::Event event;
 
@@ -76,6 +78,13 @@ Renderer::~Renderer()
 
 }
 
+void Renderer::setup()
+{
+    if(mRendererPimpl) {
+        mRendererPimpl->execute();
+    }
+}
+
 void Renderer::execute()
 {
     if(mRendererPimpl) {
@@ -90,6 +99,20 @@ bool Renderer::isAlive() const
     }
 
     return false;
+}
+
+void Renderer::setWindowName(const std::string& name)
+{
+    if(mRendererPimpl) {
+        mRendererPimpl->mRenderWindow.setTitle(name);
+    }
+}
+
+sf::RenderWindow& Renderer::getWindow() const
+{
+    if(mRendererPimpl) {
+        return mRendererPimpl->mRenderWindow;
+    }    
 }
 
 }

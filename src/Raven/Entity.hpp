@@ -1,26 +1,35 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include <memory>
 
 namespace Raven
 {
 
-struct EntityPimpl;
-
 class Entity
 {
 public:
     Entity();
-    virtual ~Entity() {}
-
-    virtual void update() = 0;
+    ~Entity();
 
     void setId(uint32_t id);
     uint32_t getId() const;
 
+    void setName(const std::string& name);
+    std::string getName() const;
+
+    void loadAsset(const std::string& filename);
+
+    const sf::Sprite& getSprite() const;
 private:
 
-    std::unique_ptr<EntityPimpl> mEntityPimpl;
+    uint32_t mId;
+    std::string mName;
+    sf::Vector2f mPosition;
+
+    sf::Texture mTexture;
+    sf::Sprite mSprite;
 };
 
 }

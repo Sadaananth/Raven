@@ -3,4 +3,5 @@ filegroup(
     srcs = [
         "Ground.png",
     ],
+    visibility = ["//visibility:public"],
 )

@@ -16,6 +16,7 @@ cc_library(
     hdrs = [
         "Application.hpp",
         "EntryPoint.hpp",
+        "Raven/Entity.hpp",
     ],
     deps = [
         "@SadaLogger",
