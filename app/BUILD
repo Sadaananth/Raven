@@ -5,6 +5,9 @@ cc_binary(
     srcs = [
         "Cricket.cpp",
     ],
+    data = [
+        "//app/assets:assets",
+    ],
     deps = [
         "//src:Raven",
         "@SadaLogger",

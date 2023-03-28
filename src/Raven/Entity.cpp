@@ -7,13 +7,11 @@
 namespace Raven
 {
 
-class EntityPimpl
+struct EntityPimpl
 {
-public:
     EntityPimpl() {}
     ~EntityPimpl() {}
 
-private:
     uint32_t mId;
     std::string mName;
     sf::Vector2f mPosition;
@@ -22,6 +20,20 @@ private:
 Entity::Entity() : mEntityPimpl(new EntityPimpl())
 {
 
+}
+
+void Entity::setId(uint32_t id)
+{
+    if(mEntityPimpl) {
+        mEntityPimpl->mId = id;
+    }
+}
+
+uint32_t Entity::getId() const
+{
+    if(mEntityPimpl) {
+        return mEntityPimpl->mId;
+    }
 }
 
 }

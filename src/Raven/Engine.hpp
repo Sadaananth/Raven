@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WindowManager.hpp"
 #include "EntityManager.hpp"
+#include "Renderer.hpp"
 
 #include <memory>
 
@@ -21,8 +21,8 @@ private:
 
     static std::unique_ptr<Engine> mEngineInstance;
 
-    std::unique_ptr<WindowManager>& mWindowManager;
     std::unique_ptr<EntityManager>& mEntityManager;
+    std::unique_ptr<Renderer>& mRenderer;
 };
 
 }

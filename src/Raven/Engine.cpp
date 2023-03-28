@@ -26,20 +26,20 @@ std::unique_ptr<Engine>& Engine::instance()
 }
 
 Engine::Engine()
-    : mWindowManager(WindowManager::instance())
     , mEntityManager(EntityManager::instance())
+    , mRenderer(Renderer::instance())
 {
 }
 
 bool Engine::isContinue() const
 {
-    return mWindowManager->isAlive();
+    return mRenderer->isAlive();
 }
 
 void Engine::run()
 {
     while(isContinue()) {
-        mWindowManager->execute();
+        mRenderer->execute();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
