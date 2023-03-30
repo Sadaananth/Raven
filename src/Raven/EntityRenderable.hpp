@@ -18,6 +18,7 @@ private:
 
     sf::Vector2f mPosition;
     sf::Texture mTexture;
+    bool textureUpdated{false};
     sf::Sprite mSprite;
 };
 

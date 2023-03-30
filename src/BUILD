@@ -14,6 +14,8 @@ cc_library(
         "Raven/EntityRenderable.cpp",
         "Raven/Renderer.hpp",
         "Raven/Renderer.cpp",
+        "Raven/WidgetManager.cpp",
+        "Raven/WidgetManager.hpp",
     ],
     hdrs = [
         "Application.hpp",
@@ -22,6 +24,7 @@ cc_library(
     ],
     deps = [
         "@SadaLogger",
+        "//src/Raven/Widgets:Widgets",
     ],
     linkopts = [
         "-lsfml-graphics",

@@ -9,16 +9,20 @@ using namespace Sada;
 
 void EntityRenderable::loadTexture()
 {
-    // if(!mTexture.create(500, 400)) {
-    //     throw std::runtime_error("Unable to create texture");
-    // }
+    if(!textureUpdated) {
+        textureUpdated = true;
+        if(!mTexture.loadFromFile(mAssetPath)) {
+            throw std::runtime_error("Failed to load asset " + mAssetPath);
+        }
 
-    if(!mTexture.loadFromFile(mAssetPath)) {
-        throw std::runtime_error("Failed to load asset " + mAssetPath);
+        mSprite.setTexture(mTexture);
+
+        auto size = mTexture.getSize();
+        auto scalex = (float)mWidth / (float)size.x;
+        auto scaley = (float)mHeight / (float)size.y;
+
+        mSprite.setScale(scalex, scaley);
     }
-
-    mSprite.setTexture(mTexture);
-    mSprite.setScale(mWidth, mHeight);
 }
 
 const sf::Sprite& EntityRenderable::getSprite() const

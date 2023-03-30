@@ -5,9 +5,8 @@
 namespace Raven
 {
 
-class RavenPImplTemplatePimpl
+struct RavenPImplTemplatePimpl
 {
-public:
     RavenPImplTemplatePimpl();
 
 };

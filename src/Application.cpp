@@ -13,9 +13,9 @@ Application::Application()
 
 Application::Application(const std::string& applicationName, uint32_t width, uint32_t height)
 {
-    Engine::instance();
     Renderer::instance()->setWindowName(applicationName);
     Renderer::instance()->setSize(width, height);
+    Engine::instance(width, height);
 }
 
 Application::~Application()
