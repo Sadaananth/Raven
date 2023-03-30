@@ -6,6 +6,9 @@
 
 using namespace Sada;
 
+constexpr uint32_t GameWidth = 600;
+constexpr uint32_t GameHeight = 480;
+
 class Cricket : public Raven::Application
 {
 public:
@@ -17,12 +20,12 @@ public:
     void loadAssets();
 private:
     
-    uint64_t mGround;
+    std::shared_ptr<Raven::Entity> mGroundEntity;
 };
 
 Cricket::Cricket()
-    : Application("Cricket")
-    , mGround(UINT64_MAX)
+    : Application("Cricket", GameWidth, GameHeight)
+    , mGroundEntity(nullptr)
 {
 }
 
@@ -35,8 +38,9 @@ void Cricket::loadAssets()
 {
     LOG_INFO << "Begin loading assets";
 
-    mGround = createNewEntity("Ground");
-    loadEntityAsset(mGround, "app/assets/Ground.png");
+    mGroundEntity = createNewEntity("Ground");
+    mGroundEntity->setSize(GameWidth, GameHeight);
+    mGroundEntity->loadAsset("app/assets/Ground.png");
 
     LOG_INFO << "End loading assets";
 }

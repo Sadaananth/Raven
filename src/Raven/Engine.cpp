@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+#include "EntityRenderable.hpp"
 
 #include "src/Logger.hpp"
 
@@ -36,29 +37,18 @@ bool Engine::isContinue() const
     return mRenderer->isAlive();
 }
 
-void Engine::setName(const std::string& name)
-{
-    mRenderer->setWindowName(name);
-}
-
 void Engine::run()
 {
     while(isContinue()) {
         mRenderer->setup();
-        mEntityManager->draw(mRenderer->getWindow());
+        mEntityManager->preLoadTextures();
+        for(auto& entity : mEntityManager->getEntityList()) {
+            auto entityRenderable = std::dynamic_pointer_cast<EntityRenderable>(entity);
+            mRenderer->getWindow().draw(entityRenderable->getSprite());
+        }
         mRenderer->execute();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-}
-
-uint32_t Engine::createNewEntity(const std::string& name)
-{
-    return mEntityManager->registerEntity(name);
-}
-
-void Engine::loadEntityAsset(uint32_t id, const std::string& assetpath)
-{
-    return mEntityManager->loadEntityAsset(id, assetpath);
 }
 
 }

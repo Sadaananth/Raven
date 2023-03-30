@@ -1,5 +1,7 @@
 #include "Application.hpp"
 #include "src/Raven/Engine.hpp"
+#include "src/Raven/EntityManager.hpp"
+#include "src/Raven/Renderer.hpp"
 
 namespace Raven
 {
@@ -9,9 +11,11 @@ Application::Application()
     Engine::instance();
 }
 
-Application::Application(const std::string& applicationName = "")
+Application::Application(const std::string& applicationName, uint32_t width, uint32_t height)
 {
-    Engine::instance()->setName(applicationName);
+    Engine::instance();
+    Renderer::instance()->setWindowName(applicationName);
+    Renderer::instance()->setSize(width, height);
 }
 
 Application::~Application()
@@ -24,14 +28,9 @@ void Application::run()
     Engine::instance()->run();
 }
 
-uint32_t Application::createNewEntity(const std::string& name)
+std::shared_ptr<Entity> Application::createNewEntity(const std::string& name)
 {
-    return Engine::instance()->createNewEntity(name);
-}
-
-void Application::loadEntityAsset(uint32_t id, const std::string& assetpath)
-{
-    Engine::instance()->loadEntityAsset(id, assetpath);
+    return EntityManager::instance()->registerEntity(name);
 }
 
 }

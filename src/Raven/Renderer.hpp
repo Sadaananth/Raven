@@ -21,6 +21,7 @@ public:
 
     bool isAlive() const;
     void setWindowName(const std::string& name);
+    void setSize(uint32_t width, uint32_t height);
 
     ~Renderer();
 private:

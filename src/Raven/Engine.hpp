@@ -13,10 +13,8 @@ class Engine
 public:
     static std::unique_ptr<Engine>& instance();
 
-    void setName(const std::string& name);
     void run();
 
-    uint32_t createNewEntity(const std::string& name);
     void loadEntityAsset(uint32_t id, const std::string& assetpath);
 private:
     Engine();

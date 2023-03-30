@@ -108,6 +108,13 @@ void Renderer::setWindowName(const std::string& name)
     }
 }
 
+void Renderer::setSize(uint32_t width, uint32_t height)
+{
+    if(mRendererPimpl) {
+        mRendererPimpl->mRenderWindow.setSize(sf::Vector2u(width, height));
+    }
+}
+
 sf::RenderWindow& Renderer::getWindow() const
 {
     if(mRendererPimpl) {

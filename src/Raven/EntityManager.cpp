@@ -1,4 +1,5 @@
 #include "EntityManager.hpp"
+#include "EntityRenderable.hpp"
 
 #include "src/Logger.hpp"
 
@@ -9,6 +10,11 @@ using namespace Sada;
 
 namespace Raven
 {
+
+struct EntityManagerPimpl
+{
+    std::vector<std::shared_ptr<Entity>> mEntityRenderableList;
+};
 
 std::unique_ptr<EntityManager> EntityManager::mEntityManagerInstance;
 
@@ -25,41 +31,30 @@ std::unique_ptr<EntityManager>& EntityManager::instance()
     return mEntityManagerInstance;
 }
 
-EntityManager::EntityManager()
+EntityManager::EntityManager() : mEntityManagerPimpl(new EntityManagerPimpl())
 {
 }
 
-uint32_t EntityManager::registerEntity(const std::string& name)
+std::shared_ptr<Entity> EntityManager::registerEntity(const std::string& name)
 {
-    std::unique_ptr<Entity> entity(new Entity());
-    entity->setId(mEntityList.size() + 1);
-    entity->setName(name);
-    mEntityList.emplace_back(std::move(entity));
+    std::shared_ptr<Entity> entityRenderable(new EntityRenderable());
+    entityRenderable->setId(mEntityManagerPimpl->mEntityRenderableList.size() + 1);
+    entityRenderable->setName(name);
+    mEntityManagerPimpl->mEntityRenderableList.emplace_back(entityRenderable);
 
-    return mEntityList.size();
+    return entityRenderable;
 }
 
-void EntityManager::loadEntityAsset(uint32_t id, const std::string& assetpath)
+std::vector<std::shared_ptr<Entity>>& EntityManager::getEntityList()
 {
-    auto itr = std::find_if(mEntityList.begin(), mEntityList.end(), [id](auto& entity) {
-        if(id == entity->getId()) {
-            return true;
-        }
-
-        return false;
-    });
-
-    if(itr != mEntityList.end()) {
-        (*itr)->loadAsset(assetpath);
-    } else {
-        LOG_DEBUG << "Entity " << id << " not found";
-    }
+    return mEntityManagerPimpl->mEntityRenderableList;
 }
 
-void EntityManager::draw(sf::RenderWindow& window)
+void EntityManager::preLoadTextures()
 {
-    for(auto& entity : mEntityList) {
-        window.draw(entity->getSprite());
+    for(auto& entity : mEntityManagerPimpl->mEntityRenderableList) {
+        auto entityRenderable = std::dynamic_pointer_cast<EntityRenderable>(entity);
+        entityRenderable->loadTexture();
     }
 }
 

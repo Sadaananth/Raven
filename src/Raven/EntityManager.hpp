@@ -8,21 +8,24 @@
 namespace Raven
 {
 
+struct EntityManagerPimpl;
+
 class EntityManager
 {
 public:
     static std::unique_ptr<EntityManager>& instance();
 
-    uint32_t registerEntity(const std::string& name);
-    void loadEntityAsset(uint32_t id, const std::string& assetpath);
+    std::shared_ptr<Entity> registerEntity(const std::string& name);
 
-    void draw(sf::RenderWindow& window);
+    std::vector<std::shared_ptr<Entity>>& getEntityList();
+
+    void preLoadTextures();
 private:
     EntityManager();
 
     static std::unique_ptr<EntityManager> mEntityManagerInstance;
 
-    std::vector<std::unique_ptr<Entity>> mEntityList;
+    std::unique_ptr<EntityManagerPimpl> mEntityManagerPimpl;
 };
 
 }

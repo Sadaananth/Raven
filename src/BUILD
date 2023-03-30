@@ -10,6 +10,8 @@ cc_library(
         "Raven/EntityManager.hpp",
         "Raven/Entity.cpp",
         "Raven/Entity.hpp",
+        "Raven/EntityRenderable.hpp",
+        "Raven/EntityRenderable.cpp",
         "Raven/Renderer.hpp",
         "Raven/Renderer.cpp",
     ],

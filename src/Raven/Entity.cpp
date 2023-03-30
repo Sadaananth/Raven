@@ -40,20 +40,15 @@ std::string Entity::getName() const
     return mName;
 }
 
-void Entity::loadAsset(const std::string& filename)
+void Entity::setSize(uint32_t width, uint32_t height)
 {
-    if(!mTexture.loadFromFile(filename)) {
-        throw std::runtime_error("Failed to load asset " + filename);
-    }
-
-    mSprite.setTexture(mTexture);
-
-    LOG_DEBUG << "Asset " << filename << " loaded succesfully";
+    mWidth = width;
+    mHeight = height;
 }
 
-const sf::Sprite& Entity::getSprite() const
+void Entity::loadAsset(const std::string& filename)
 {
-    return mSprite;
+    mAssetPath = filename;
 }
 
 }
