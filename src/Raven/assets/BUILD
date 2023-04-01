@@ -1,7 +1,7 @@
 filegroup(
     name = "assets",
     srcs = [
-        "AntiCorona.ttf",
+        "arial.ttf",
     ],
     visibility = ["//visibility:public"],
 )

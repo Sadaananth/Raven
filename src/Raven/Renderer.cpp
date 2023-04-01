@@ -81,7 +81,7 @@ Renderer::~Renderer()
 void Renderer::setup()
 {
     if(mRendererPimpl) {
-        mRendererPimpl->execute();
+        mRendererPimpl->setup();
     }
 }
 
